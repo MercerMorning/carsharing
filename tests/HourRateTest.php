@@ -12,8 +12,8 @@ class HourRateTest extends TestCase
      */
     public function testNonService()
     {
-        $rate = new HourRate(self::ORDER_COUNT_MINUTES);
-        $this->assertEquals(1, $rate->getPrice());
+        $rate = new App\HourRate(self::ORDER_COUNT_MINUTES);
+        $this->assertEquals(1000, $rate->getPrice());
     }
 
     /**
@@ -21,9 +21,9 @@ class HourRateTest extends TestCase
      */
     public function testIncludeGps()
     {
-        $rate = new HourRate(self::ORDER_COUNT_MINUTES);
-        $rate->setGps();
-        $this->assertEquals(1, $rate->getPrice());
+        $rate = new App\HourRate(self::ORDER_COUNT_MINUTES);
+        $rate->onGps();
+        $this->assertEquals(1075, $rate->getPrice());
     }
 
     /**
@@ -31,9 +31,9 @@ class HourRateTest extends TestCase
      */
     public function testIncludeDriver()
     {
-        $rate = new HourRate(self::ORDER_COUNT_MINUTES);
-        $rate->setDriver();
-        $this->assertEquals(1, $rate->getPrice());
+        $rate = new App\HourRate(self::ORDER_COUNT_MINUTES);
+        $rate->onDriver();
+        $this->assertEquals(1100, $rate->getPrice());
     }
 
     /**
@@ -41,10 +41,10 @@ class HourRateTest extends TestCase
      */
     public function testIncludeGpsAndDriver()
     {
-        $rate = new HourRate(self::ORDER_COUNT_MINUTES);
-        $rate->setDriver();
-        $rate->setGps();
-        $this->assertEquals(1, $rate->getPrice());
+        $rate = new App\HourRate(self::ORDER_COUNT_MINUTES);
+        $rate->onDriver();
+        $rate->onGps();
+        $this->assertEquals(1175, $rate->getPrice());
     }
 
     /**
@@ -52,11 +52,11 @@ class HourRateTest extends TestCase
      */
     public function testIncludeGpsAndDoubleDriver()
     {
-        $rate = new HourRate(self::ORDER_COUNT_MINUTES);
-        $rate->setDriver();
-        $rate->setDriver();
-        $rate->setGps();
-        $this->assertEquals(1, $rate->getPrice());
+        $rate = new App\HourRate(self::ORDER_COUNT_MINUTES);
+        $rate->onDriver();
+        $rate->onDriver();
+        $rate->onGps();
+        $this->assertEquals(1175, $rate->getPrice());
     }
 
     /**
@@ -64,10 +64,10 @@ class HourRateTest extends TestCase
      */
     public function testIncludeDoubleGpsAndDriver()
     {
-        $rate = new HourRate(self::ORDER_COUNT_MINUTES);
-        $rate->setDriver();
-        $rate->setGps();
-        $rate->setGps();
-        $this->assertEquals(1, $rate->getPrice());
+        $rate = new App\HourRate(self::ORDER_COUNT_MINUTES);
+        $rate->onDriver();
+        $rate->onGps();
+        $rate->onGps();
+        $this->assertEquals(1175, $rate->getPrice());
     }
 }

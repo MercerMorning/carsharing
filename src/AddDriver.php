@@ -1,15 +1,31 @@
 <?php
 
 namespace App;
+
 trait AddDriver
 {
+
+    /**
+     * @var bool
+     * Состояние услуги "Дополнительный водитель"(включена или выключена)
+     */
     protected $onDriver = false;
-    public function setDriver(){
+
+    /**
+     * Включение услуги "Дополнительный водитель"
+     */
+    public function onDriver()
+    {
         $this->onDriver = true;
     }
-    public function deleteDriver(){
+
+    /**
+     * Выключение услуги "Дополнительный водитель"
+     */
+    protected function offDriver()
+    {
         if ($this->onDriver == true) {
-            $this->price -= 100;
+            $this->price -= self::COST_OF_DRIVER;
         }
         $this->onDriver = false;
     }

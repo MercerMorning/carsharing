@@ -3,7 +3,7 @@
 namespace App;
 
 /**
- * Class MaincRate
+ * Класс базового тарифа
  */
 class MainRate extends Rate
 {
@@ -11,33 +11,23 @@ class MainRate extends Rate
     use AddDriver;
 
     /**
-     *
+     * Цена за пройденное расстояние во время использования тарифа
      */
-    const GPS_PRICE_FOR_HOUR = 15;
+    const PRICE_FOR_DISTANCE = 10;
 
     /**
-     *
+     * Цена за использование тарифа в течение минуты
      */
-    protected $countDistance = 10;
+    const PRICE_FOR_MINUTES = 3;
 
     /**
-     *
-     */
-    protected $countMinutes = 3;
-
-    /**
-     *
+     * Получение общей цены
      */
     public function getPrice()
     {
         parent::getPrice();
 
-        if ($this->onDriver) {
-            $this->price += 100;
-        }
-
-        if ($this->time >= 60 && $this->onGps) {
-            $this->price += self::GPS_PRICE_FOR_HOUR * $this->roundPrice($this->time);
-        }
+        $this->price += $this->distance * self::PRICE_FOR_DISTANCE + $this->time * self::PRICE_FOR_MINUTES;
+        return $this->price;
     }
 }
